@@ -35,7 +35,8 @@ const ItemPanel = styled.div`
 `
 
 const ItemBox = styled.div`
-  position: relative;
+  display: flex;
+  flex-direction: row;
   padding: ${padding};
   border-left: 4px solid ${secondaryColor};
   margin-top: calc(${padding} / 2);
@@ -43,10 +44,13 @@ const ItemBox = styled.div`
   ${elevation(4)}
 `
 
+const ItemBoxContent = styled.div`
+  flex-grow: 1;
+`
+
 const ItemBoxButtons = styled.div`
-  position: absolute;
-  right: ${padding};
-  bottom: ${padding};
+  align-self: flex-end;
+  display: flex;
 
   > :nth-child(1) {
     margin-right: ${padding};
@@ -69,8 +73,8 @@ export const TodoItemEditor = ({ title, item = {}, onSubmit }) => {
   const [state, setState] = useState({
     title: "",
     description: "",
+    ...item,
   })
-
   const syncStateHandler = event => {
     setState({
       ...state,
@@ -87,7 +91,7 @@ export const TodoItemEditor = ({ title, item = {}, onSubmit }) => {
         <input
           placeholder="Titulo"
           name="title"
-          value={state.value}
+          value={state.title}
           onChange={syncStateHandler}
         />
         <textarea
@@ -116,13 +120,25 @@ export const TodoItemViewer = ({ item }) => {
 }
 
 export const Item = ({ item, onClick }) => {
+  const editItem = event => {
+    event.stopPropagation()
+    event.preventDefault()
+    navigate(`/update_item?id=${item.id}`)
+  }
+  const deleteItem = event => {
+    event.stopPropagation()
+    event.preventDefault()
+    navigate(`/update_item?id=${item.id}`)
+  }
   return (
-    <ItemBox onClick={onClick}>
-      <h3>{item.title}</h3>
-      <p>{item.description}</p>
+    <ItemBox>
+      <ItemBoxContent onClick={onClick}>
+        <h3>{item.title}</h3>
+        <p>{item.description}</p>
+      </ItemBoxContent>
       <ItemBoxButtons>
-        <FlatIconButton icon={faPencilAlt} />
-        <FlatIconButton icon={faTrashAlt} />
+        <FlatIconButton icon={faPencilAlt} onClick={editItem} />
+        <FlatIconButton icon={faTrashAlt} onClick={deleteItem} />
       </ItemBoxButtons>
     </ItemBox>
   )

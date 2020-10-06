@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import SEO from "../components/seo"
 import { TodoItemViewer } from "../components/todo_item"
 import { PageTransition } from "../components/page_transition"
@@ -8,11 +8,7 @@ import { getItem } from "../store/todo_list"
 import { useSelector } from "react-redux"
 
 const PaintShowItem = ({ id }) => {
-  const [item, setItem] = useState(null)
-  const found_item = useSelector(getItem(id))
-  useEffect(() => {
-    setItem(found_item)
-  }, [found_item, item])
+  const item = useSelector(getItem(id))
   return (
     <>
       <SEO title="Ver Item" />

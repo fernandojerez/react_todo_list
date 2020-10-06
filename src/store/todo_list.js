@@ -12,6 +12,6 @@ const Model = createSlice({
 })
 
 export const todoList = state => state.todo_list
-export const getItem = id => state => state.todo_list.find(itm => (itm.id = id))
+export const getItem = id => state => state.todo_list.find(itm => itm.id === id)
 export const { addItem, removeItem, updateItem } = Model.actions
 export default Model.reducer

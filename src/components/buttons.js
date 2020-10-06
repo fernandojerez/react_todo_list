@@ -80,5 +80,4 @@ IconButton.propTypes = {
 
 FlatIconButton.propTypes = {
   icon: PropTypes.object.isRequired,
-  onClick: PropTypes.func.isRequired,
 }
