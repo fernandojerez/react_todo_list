@@ -2,11 +2,11 @@ import React from "react"
 import { PageTransition } from "../components/page_transition"
 import SEO from "../components/seo"
 
-const NotFoundPage = () => (
+const MapPage = () => (
   <PageTransition>
-    <SEO title="404: Not found" />
-    <h1>404: Not Found</h1>
+    <SEO title="Mapa" />
+    Goes Map
   </PageTransition>
 )
 
-export default NotFoundPage
+export default MapPage
