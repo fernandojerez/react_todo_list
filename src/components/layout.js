@@ -52,7 +52,7 @@ const Content = styled.main`
 const LayoutArea = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: var(--device-full-height, 100vh);
   width: 100vw;
   overflow: auto;
   background-color: ${backgroundColor};
@@ -65,7 +65,10 @@ const Layout = ({ children }) => {
       .toLowerCase()
       .match(/mobile/)
     if (mobile_device) {
-      document.documentElement.style.setProperty("--device-full-height", "100%")
+      document.documentElement.style.setProperty(
+        "--device-full-height",
+        window.innerHeight + "px"
+      )
     } else {
       document.documentElement.style.setProperty(
         "--device-full-height",
