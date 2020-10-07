@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { navigate } from "gatsby"
+
 import {
   elevation,
   padding,
@@ -10,6 +10,10 @@ import { Title } from "../styles"
 import { Button, FlatIconButton, OutlineButton } from "./buttons"
 import styled from "styled-components"
 import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons"
+import { Confirm } from "./overlay"
+import { navigate } from "gatsby"
+import { useDispatch } from "react-redux"
+import { removeItem } from "../store/todo_list"
 
 const ToolbarStyled = styled.div`
   text-align: center;
@@ -120,6 +124,8 @@ export const TodoItemViewer = ({ item }) => {
 }
 
 export const Item = ({ item, onClick }) => {
+  const [confirm_delete, setConfirmDelete] = useState(false)
+  const dispatch = useDispatch()
   const editItem = event => {
     event.stopPropagation()
     event.preventDefault()
@@ -128,18 +134,32 @@ export const Item = ({ item, onClick }) => {
   const deleteItem = event => {
     event.stopPropagation()
     event.preventDefault()
-    navigate(`/update_item?id=${item.id}`)
+    dispatch(removeItem(item.id))
+    setConfirmDelete(false)
   }
   return (
-    <ItemBox>
-      <ItemBoxContent onClick={onClick}>
-        <h3>{item.title}</h3>
-        <p>{item.description}</p>
-      </ItemBoxContent>
-      <ItemBoxButtons>
-        <FlatIconButton icon={faPencilAlt} onClick={editItem} />
-        <FlatIconButton icon={faTrashAlt} onClick={deleteItem} />
-      </ItemBoxButtons>
-    </ItemBox>
+    <>
+      <ItemBox>
+        <ItemBoxContent onClick={onClick}>
+          <h3>{item.title}</h3>
+          <p>{item.description}</p>
+        </ItemBoxContent>
+        <ItemBoxButtons>
+          <FlatIconButton icon={faPencilAlt} onClick={editItem} />
+          <FlatIconButton
+            icon={faTrashAlt}
+            onClick={() => setConfirmDelete(true)}
+          />
+        </ItemBoxButtons>
+      </ItemBox>
+      {confirm_delete && (
+        <Confirm
+          title="Desea eliminar la tarea?"
+          msg={`Esta seguro que desea eliminar la tarea ${item.title}`}
+          onConfirm={deleteItem}
+          onCancel={() => setConfirmDelete(false)}
+        />
+      )}
+    </>
   )
 }

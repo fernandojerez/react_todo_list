@@ -24,6 +24,7 @@ import {
 } from "../styles/theme"
 
 const Header = styled.header`
+  display: flex;
   background-color: ${primaryColor};
   color: ${onPrimaryColor};
   font-size: 2rem;
