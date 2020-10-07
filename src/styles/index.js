@@ -11,6 +11,15 @@ body {
     margin: 0;
     padding: 0;
 }
+
+@supports (-webkit-appearance:none) {
+  body {
+    height: 100%;
+  }
+  html {
+    height: 100%;
+  }
+}
 `
 
 export const Title = styled.h2`

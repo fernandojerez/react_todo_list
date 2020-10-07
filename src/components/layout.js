@@ -45,6 +45,9 @@ const LayoutArea = styled.div`
   height: 100vh;
   width: 100vw;
   overflow: auto;
+  @supports (-webkit-appearance: none) {
+    min-height: 100%;
+  }
 
   background-color: ${backgroundColor};
   color: ${onBackgroundColor};
