@@ -25,15 +25,22 @@ import {
 import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { currentTheme } from "../store/theme"
+import { ThemeChooser } from "./theme_chooser"
 
 const Header = styled.header`
   display: flex;
+  align-items: center;
   background-color: ${primaryColor};
   color: ${onPrimaryColor};
-  font-size: 2rem;
-  font-weight: 100;
   padding: ${padding};
   ${elevation(8)};
+
+  > h1 {
+    font-family: "Open Sans";
+    font-size: 2rem;
+    flex-grow: 1;
+    font-weight: 100;
+  }
 `
 
 const Content = styled.main`
@@ -87,7 +94,10 @@ const Layout = ({ children }) => {
   return (
     <ThemeProvider theme={{ mode: theme }}>
       <LayoutArea>
-        <Header>{data.site.siteMetadata?.title || `Title`}</Header>
+        <Header>
+          <h1>{data.site.siteMetadata?.title || `Title`}</h1>
+          <ThemeChooser />
+        </Header>
         <Content>{children}</Content>
         <BottomTabs selected={tabs[window.location.pathname]}>
           <Tab label="Todo List" icon={faClipboardList} to="/" />
