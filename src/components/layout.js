@@ -46,6 +46,7 @@ const Header = styled.header`
 const Content = styled.main`
   position: relative;
   padding: ${padding};
+  overflow: auto;
   flex-grow: 1;
 `
 
@@ -54,7 +55,6 @@ const LayoutArea = styled.div`
   flex-direction: column;
   height: var(--device-full-height, 100vh);
   width: 100vw;
-  overflow: auto;
   background-color: ${backgroundColor};
   color: ${onBackgroundColor};
 `
