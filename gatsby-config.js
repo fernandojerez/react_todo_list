@@ -19,9 +19,9 @@ module.exports = {
     {
       resolve: `gatsby-plugin-styled-components`,
       options: {
-        displayName: true,
-        minify: false,
-        transpileTemplateLiterals: false,
+        displayName: process.env.NODE_ENV !== "production",
+        minify: process.env.NODE_ENV === "production",
+        transpileTemplateLiterals: process.env.NODE_ENV === "production",
       },
     },
     {

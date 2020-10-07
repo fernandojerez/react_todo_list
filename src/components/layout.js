@@ -22,6 +22,7 @@ import {
   backgroundColor,
   onBackgroundColor,
 } from "../styles/theme"
+import { useEffect } from "react"
 
 const Header = styled.header`
   display: flex;
@@ -42,18 +43,27 @@ const Content = styled.main`
 const LayoutArea = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: var(--device-full-height, 100vh);
   width: 100vw;
   overflow: auto;
-  @supports (-webkit-appearance: none) {
-    min-height: 100%;
-  }
-
   background-color: ${backgroundColor};
   color: ${onBackgroundColor};
 `
 
 const Layout = ({ children }) => {
+  useEffect(() => {
+    const mobile_device = window.navigator.userAgent
+      .toLowerCase()
+      .match(/mobile/)
+    if (mobile_device) {
+      document.documentElement.style.setProperty("--device-full-height", "100%")
+    } else {
+      document.documentElement.style.setProperty(
+        "--device-full-height",
+        "100vh"
+      )
+    }
+  }, [])
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -68,6 +78,7 @@ const Layout = ({ children }) => {
     "/": 0,
     "/add_item": 0,
     "/view_item": 0,
+    "/update_item": 0,
     "/map": 1,
   }
   return (

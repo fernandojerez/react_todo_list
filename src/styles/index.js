@@ -10,15 +10,15 @@ export const GlobalStyles = createGlobalStyle`
 body {
     margin: 0;
     padding: 0;
+    height: 100%;
 }
 
-@supports (-webkit-appearance:none) {
-  body {
-    height: 100%;
-  }
-  html {
-    height: 100%;
-  }
+html {
+  height: 100%;
+}
+
+:root {
+  --device-full-height: 100vh
 }
 `
 
