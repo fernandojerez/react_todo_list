@@ -14,6 +14,7 @@ import {
   REHYDRATE,
 } from "redux-persist"
 import TodoListModel from "./todo_list"
+import ThemeModel from "./theme"
 
 const persistConfig = {
   key: "root",
@@ -24,6 +25,7 @@ const persistedReducer = persistReducer(
   persistConfig,
   combineReducers({
     todo_list: TodoListModel,
+    theme: ThemeModel
   })
 )
 

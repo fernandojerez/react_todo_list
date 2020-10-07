@@ -7,7 +7,7 @@
 
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "styled-components"
+import styled, { ThemeProvider } from "styled-components"
 import { useStaticQuery, graphql } from "gatsby"
 import { BottomTabs, Tab } from "./bottom_tabs"
 import {
@@ -23,6 +23,8 @@ import {
   onBackgroundColor,
 } from "../styles/theme"
 import { useEffect } from "react"
+import { useSelector } from "react-redux"
+import { currentTheme } from "../store/theme"
 
 const Header = styled.header`
   display: flex;
@@ -43,7 +45,7 @@ const Content = styled.main`
 const LayoutArea = styled.div`
   display: flex;
   flex-direction: column;
-  height: var(--device-full-height, 100vh);
+  height: 100vh;
   width: 100vw;
   overflow: auto;
   background-color: ${backgroundColor};
@@ -64,6 +66,7 @@ const Layout = ({ children }) => {
       )
     }
   }, [])
+  const theme = useSelector(currentTheme)
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -82,14 +85,16 @@ const Layout = ({ children }) => {
     "/map": 1,
   }
   return (
-    <LayoutArea>
-      <Header>{data.site.siteMetadata?.title || `Title`}</Header>
-      <Content>{children}</Content>
-      <BottomTabs selected={tabs[window.location.pathname]}>
-        <Tab label="Todo List" icon={faClipboardList} to="/" />
-        <Tab label="Map" icon={faMapMarkedAlt} to="/map" />
-      </BottomTabs>
-    </LayoutArea>
+    <ThemeProvider theme={{ mode: theme }}>
+      <LayoutArea>
+        <Header>{data.site.siteMetadata?.title || `Title`}</Header>
+        <Content>{children}</Content>
+        <BottomTabs selected={tabs[window.location.pathname]}>
+          <Tab label="Todo List" icon={faClipboardList} to="/" />
+          <Tab label="Map" icon={faMapMarkedAlt} to="/map" />
+        </BottomTabs>
+      </LayoutArea>
+    </ThemeProvider>
   )
 }
 
